@@ -13,11 +13,7 @@ import (
 
 func main() {
 	// 收集器
-	c := colly.NewCollector(
-		colly.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
-			"AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"),
-		// colly.Async(true),
-	)
+	c := colly.NewCollector()
 
 	c.OnRequest(func(r *colly.Request) {
 		fmt.Println("Visiting", r.URL.String())
@@ -25,7 +21,7 @@ func main() {
 
 	c.OnResponse(func(r *colly.Response) {
 		// 保存响应内容到 json文件
-		r.Save("./data/data.json")
+		// r.Save("./data/data.json")
 
 		// 保存数据到数据库
 		DoData(r)

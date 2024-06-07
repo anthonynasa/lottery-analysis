@@ -1,6 +1,6 @@
 package model
 
-type Data struct {
+type FcResponse struct {
 	State    int    `json:"state"`
 	Message  string `json:"message"`
 	Total    int    `json:"total"`
@@ -38,7 +38,7 @@ type Data struct {
 	} `json:"result"`
 }
 
-type Result struct {
+type FcResult struct {
 	NameCode    string `json:"nameCode" gorm:"primarykey"`
 	Name        string `json:"name" `
 	Code        string `json:"code"`
