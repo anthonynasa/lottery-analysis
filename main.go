@@ -77,7 +77,7 @@ func main() {
 				// 开启事务
 				err = db.Transaction(func(tx *gorm.DB) error {
 					// 在事务中执行一些 db 操作（从这里开始，您应该使用 'tx' 而不是 'db'）
-					var maxID uint = 1
+					var maxID uint
 					// COALESCE(MAX(id), 0) 用于在 MAX(id) 返回空值时将其替换为零。这样，即使表是新建的且没有任何记录，也不会出现空值的问题。
 					if err := tx.Model(&model.FcResult{}).Select("COALESCE(MAX(id), 0)").Scan(&maxID).Error; err != nil {
 
