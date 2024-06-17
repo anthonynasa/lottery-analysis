@@ -26,14 +26,14 @@ func main() {
 
 		if _, exists := data1["result"]; exists {
 			// 福彩
-			var response model.FcResponse
+			var fcResponse model.FcResponse
 			var fcResults []model.FcResult
-			err := json.Unmarshal(r.Body, &response)
+			err := json.Unmarshal(r.Body, &fcResponse)
 			if err != nil {
 				return
 			}
 			// 遍历result
-			for _, v := range response.Result {
+			for _, v := range fcResponse.Result {
 				var fcPrizegrades []model.FcPrizegrade
 				for _, p := range v.Prizegrades {
 					fcPrizegrade := model.FcPrizegrade{
@@ -97,8 +97,18 @@ func main() {
 
 		} else {
 			// 大乐透
-			// fmt.Println("================")
-			// fmt.Println(data1["value"])
+			var tcResponse model.TcResponse
+			// var tcResults []model.FcResult
+			err := json.Unmarshal(r.Body, &tcResponse)
+			if err != nil {
+				fmt.Println(err.Error())
+				return
+			}
+			fmt.Println(tcResponse)
+			for _, v := range tcResponse.Value.List {
+				fmt.Println(v)
+			}
+
 		}
 
 		// for k, v := range data1 {
@@ -111,7 +121,7 @@ func main() {
 		// "3d":  "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=3d&pageNo=1&pageSize=2000&systemType=PC",
 		// "qlc": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=qlc&pageNo=1&pageSize=2000&systemType=PC",
 		// "kl8": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=kl8&pageNo=1&pageSize=2000&systemType=PC",
-		// "dlt": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&provinceId=0&pageSize=20&isVerify=1&pageNo=1",
+		"dlt": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&provinceId=0&pageSize=20&isVerify=1&pageNo=1",
 	}
 	for _, v := range urlMap {
 		c.Visit(v)
