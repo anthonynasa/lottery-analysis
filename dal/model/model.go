@@ -114,7 +114,7 @@ type TcResponse struct {
 			LotteryPromotionFlag    int           `json:"lotteryPromotionFlag"`
 			LotteryPromotionFlagRj  int           `json:"lotteryPromotionFlagRj"`
 			LotterySaleBeginTime    string        `json:"lotterySaleBeginTime"`
-			LotterySaleEndTimeUnix  interface{}       `json:"lotterySaleEndTimeUnix"`
+			LotterySaleEndTimeUnix  int           `json:"lotterySaleEndTimeUnix"`
 			LotterySaleEndtime      string        `json:"lotterySaleEndtime"`
 			LotterySuspendedFlag    int           `json:"lotterySuspendedFlag"`
 			LotteryUnsortDrawresult string        `json:"lotteryUnsortDrawresult"`
@@ -156,17 +156,17 @@ type TcResult struct {
 	gorm.Model
 	LotteryGameName       string       `json:"lotteryGameName"`
 	LotteryGameNum        string       `json:"lotteryGameNum"`
-	LotteryDrawNum        string       `json:"lotteryDrawNum"`
+	LotteryDrawNum        string       `json:"lotteryDrawNum" gorm:"size:64;uniqueIndex"`
 	DrawPdfUrl            string       `json:"drawPdfUrl"`
 	LotteryDrawTime       string       `json:"lotteryDrawTime"`
 	LotteryEquipmentCount int          `json:"lotteryEquipmentCount"`
 	LotteryDrawResult     string       `json:"lotteryDrawResult"`
 	TotalSaleAmount       string       `json:"totalSaleAmount"`
-	PoolBalanceAfterdraw  string       `json:"poolBalanceAfterdraw"`
-	PrizeLevelList        []PrizeLevel `json:"prizeLevelList"`
+	PoolBalanceAfterdraw  string         `json:"poolBalanceAfterdraw"`
+	PrizeLevelList        []TcPrizeLevel `json:"prizeLevelList"`
 }
 
-type PrizeLevel struct {
+type TcPrizeLevel struct {
 	gorm.Model
 	AwardType         int    `json:"awardType"`
 	Group             string `json:"group"`
@@ -177,5 +177,5 @@ type PrizeLevel struct {
 	StakeAmountFormat string `json:"stakeAmountFormat"`
 	StakeCount        string `json:"stakeCount"`
 	TotalPrizeamount  string `json:"totalPrizeamount"`
-	LotteryDrawNumId  string `json:"lottery_draw_num_id"`
+	TcResultId  string `json:"tc_result_id"`
 }
