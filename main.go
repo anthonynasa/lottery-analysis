@@ -11,7 +11,9 @@ import (
 
 func main() {
 
-	c := colly.NewCollector()
+	c := colly.NewCollector(
+		colly.Async(true),
+	)
 	c.OnResponse(func(r *colly.Response) {
 		// 存储json到.json文件
 		r.Save("./data/data.json")
@@ -153,7 +155,6 @@ func main() {
 				tcResults = append(tcResults, tcResult)
 
 			}
-			fmt.Println(tcResults)
 
 			// 保存数据到mysql
 			// 1. 创建并连接到数据库
@@ -205,11 +206,11 @@ func main() {
 
 	})
 	urlMap := map[string]string{
-		// "ssq": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=ssq&pageNo=1&pageSize=3&systemType=PC",
+		"ssq": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=ssq&pageNo=1&pageSize=3&systemType=PC",
 		// "3d":  "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=3d&pageNo=1&pageSize=2000&systemType=PC",
 		// "qlc": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=qlc&pageNo=1&pageSize=2000&systemType=PC",
 		// "kl8": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=kl8&pageNo=1&pageSize=2000&systemType=PC",
-		"dlt": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&provinceId=0&pageSize=10&isVerify=1&pageNo=1",
+		"dlt": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&provinceId=0&pageSize=2000&isVerify=1&pageNo=1",
 	}
 	for _, v := range urlMap {
 		c.Visit(v)
