@@ -11,8 +11,23 @@ import (
 
 func main() {
 
+	urlMap := map[string]string{
+		"ssq": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=ssq&pageNo=1&pageSize=2000&systemType=PC",
+		// "3d":  "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=3d&pageNo=1&pageSize=2000&systemType=PC",
+		// "qlc": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=qlc&pageNo=1&pageSize=2000&systemType=PC",
+		// "kl8": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=kl8&pageNo=1&pageSize=2000&systemType=PC",
+		"dlt": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&pageSize=200&isVerify=1&pageNo=1",
+	}
+	for _, v := range urlMap {
+
+		doCollect( v)
+	}
+}
+
+// 封装访问
+func doCollect(url string) {
 	c := colly.NewCollector(
-		colly.Async(true),
+	// colly.Async(true),
 	)
 	c.OnResponse(func(r *colly.Response) {
 		// 存储json到.json文件
@@ -205,17 +220,7 @@ func main() {
 		}
 
 	})
-	urlMap := map[string]string{
-		"ssq": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=ssq&pageNo=1&pageSize=3&systemType=PC",
-		// "3d":  "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=3d&pageNo=1&pageSize=2000&systemType=PC",
-		// "qlc": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=qlc&pageNo=1&pageSize=2000&systemType=PC",
-		// "kl8": "https://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=kl8&pageNo=1&pageSize=2000&systemType=PC",
-		"dlt": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry?gameNo=85&provinceId=0&pageSize=2000&isVerify=1&pageNo=1",
-	}
-	for _, v := range urlMap {
-		c.Visit(v)
-	}
-
+	c.Visit(url)
 	// 等待所有访问完成
 	c.Wait()
 }
